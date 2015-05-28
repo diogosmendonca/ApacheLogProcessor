@@ -7,7 +7,8 @@
 read.apache.log.combined(file, url_includes = "", url_excludes = "",
   url_query_string = TRUE, url_http_version = TRUE,
   url_http_method = TRUE, columns = c("ip", "datetime", "url", "httpcode",
-  "size", "referer", "useragent"), num_cores = 1)
+  "size", "referer", "useragent"), num_cores = 1,
+  prevent_quotes_inside_url = FALSE)
 }
 \arguments{
 \item{file}{string. Full path to the log file.}
@@ -25,6 +26,8 @@ read.apache.log.combined(file, url_includes = "", url_excludes = "",
 \item{columns}{list. List of columns names that will be included in data frame output. All columns is the default value. c("ip", "datetime", "url", "httpcode", "size" , "referer", "useragent")}
 
 \item{num_cores}{number. Number of cores for parallel execution, if not passed 1 core is assumed. Used only to convert datetime form string to datetime type.}
+
+\item{prevent_quotes_inside_url}{boolean. Search and remove the quotes inside the url field.}
 }
 \value{
 a data frame with the apache log file information.
@@ -54,7 +57,7 @@ df4 = read.apache.log.combined(path, url_http_method=FALSE, url_query_string=FAL
 #Return only the ip, url and datetime columns
 df5 = read.apache.log.combined(path, columns=c("ip", "url", "datetime"))
 
-#Process using 3 cores in parallel for speed up.
+#Process using 2 cores in parallel for speed up.
 df6 = read.apache.log.combined(path, num_cores=2)
 }
 \author{

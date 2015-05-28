@@ -14,6 +14,7 @@
 #' @param url_http_method boolean. If the http method will be included in url column.
 #' @param columns list. List of columns names that will be included in data frame output. All columns is the default value. c("ip", "datetime", "url", "httpcode", "size" , "referer", "useragent")
 #' @param num_cores number. Number of cores for parallel execution, if not passed 1 core is assumed. Used only to convert datetime form string to datetime type.
+#' @param prevent_quotes_inside_url boolean. Search and remove the quotes inside the url field. 
 #' @return a data frame with the apache log file information.
 #' @author Diogo Silveira Mendonca
 #' @seealso \url{http://httpd.apache.org/docs/1.3/logs.html}
@@ -35,7 +36,7 @@
 #' #Return only the ip, url and datetime columns
 #' df5 = read.apache.log.combined(path, columns=c("ip", "url", "datetime"))
 #' 
-#' #Process using 3 cores in parallel for speed up. 
+#' #Process using 2 cores in parallel for speed up. 
 #' df6 = read.apache.log.combined(path, num_cores=2)
 #' 
 #' @import foreach
@@ -45,11 +46,25 @@
 read.apache.log.combined <- function(file, url_includes = "", url_excludes = "", 
                                      url_query_string = TRUE, url_http_version = TRUE, url_http_method = TRUE,
                                      columns = c("ip", "datetime", "url", "httpcode", "size" , 
-                                                 "referer", "useragent"), num_cores = 1){
+                                                 "referer", "useragent"), num_cores = 1,
+                                     prevent_quotes_inside_url = FALSE){
   
+  #=== REMOVE QUOTES INSIDE QUOTES IN URL FIELD ===================================
+  if(prevent_quotes_inside_url == TRUE){
+    text <- readLines(file)
+    text <- gsub("\\\\\"", "'", text)
+    tConnection <- textConnection(text)
+  }else{
+    tConnection <- file
+  }
   #=== LOAD THE APACHE ACCESS LOG FILE AS CSV =====================================
-  logDf = read.csv(file, header = FALSE, sep = " ", quote = "\"",
-                       dec = ".", fill = FALSE, stringsAsFactors = FALSE)
+  
+  logDf = read.csv(tConnection, header = FALSE, sep = " ", quote = "\"",
+                   dec = ".", fill = FALSE, stringsAsFactors = FALSE)
+  
+  if (prevent_quotes_inside_url == TRUE){
+    close(tConnection)
+  }
   
   #=== SET UP THE COLUMNS =========================================================
   
