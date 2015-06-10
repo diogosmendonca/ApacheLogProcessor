@@ -162,6 +162,17 @@ read.apache.log.combined <- function(file, url_includes = "", url_excludes = "",
       
   }
   
+  #=== CONVERT THE SIZE COLUMN FROM TEXT TO NUMERIC ===========================
+  
+  if("size" %in% c_include){
+    sizes <- logDf$size
+    sizes <- as.numeric(sizes)
+    logDf$size <- NULL
+    sizesFrame <- data.frame(sizes)
+    colnames(sizesFrame) <- c("size")
+    logDf <- cbind(logDf, sizesFrame)
+  }
+  
   #=== RETURN THE DATA FRAME ==================================================
   logDf
   
