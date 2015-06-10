@@ -104,8 +104,11 @@ read.apache.log.combined <- function(file, url_includes = "", url_excludes = "",
   
   #=== CLEAR THE DATETIME AND TIMEZONE COLUMNS ====================================
   if ("datetime" %in% c_include){
+    
     #Create a vector of dates
     dates = seq( as.POSIXlt(Sys.Date()), by=1, len=nrow(logDf))
+    lct <- Sys.getlocale("LC_TIME") 
+    Sys.setlocale("LC_TIME", "C")
     
     #CREATE CLUSTERS FOR PARALLEL EXECUTION
     cl <- makeCluster(num_cores)
@@ -113,10 +116,13 @@ read.apache.log.combined <- function(file, url_includes = "", url_excludes = "",
     
     #parse the dates form data frame to dates vector
     dates <- foreach (i = 1:nrow(logDf), .combine=rbind) %dopar%{
+      Sys.setlocale("LC_TIME", "C")
       datetimeWithTimezone = paste(logDf$datetime[i], logDf$timezone[i])
       dates[i] <- strptime(datetimeWithTimezone, format="[%d/%b/%Y:%H:%M:%S %z]")
       return(dates[i])
     }
+    
+    Sys.setlocale("LC_TIME", lct)
     dates <- as.POSIXct(dates, origin="1970-01-01")
     
     #Shutdown the cluster
