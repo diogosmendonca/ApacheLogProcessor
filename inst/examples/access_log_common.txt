@@ -1,0 +1,12 @@
+20.18.08.84 - - [01/Mar/2015:06:43:47 -0300] "GET / HTTP/1.1" 302 427
+13.12.71.26 - - [01/Mar/2015:06:43:48 -0300] "GET / HTTP/1.1" 302 427
+17.13.15.24 - - [01/Mar/2015:06:48:27 -0300] "GET / HTTP/1.1" 200 5053
+17.13.15.24 - - [01/Mar/2015:06:48:27 -0300] "GET / HTTP/1.1" 200 5053
+17.13.15.24 - - [01/Mar/2015:06:48:28 -0300] "GET /site/notifIt!-1.1/css/notifIt.css HTTP/1.1" 200 5053
+17.13.15.24 - - [01/Mar/2015:06:48:28 -0300] "GET /site/notifIt!-1.1/js/notifIt.js HTTP/1.1" 200 5053
+17.13.15.24 - - [01/Mar/2015:06:48:31 -0300] "GET /infinance/ HTTP/1.1" 200 978
+17.13.15.24 - - [01/Mar/2015:06:48:33 -0300] "GET /infinanceclient/infinanceclient.nocache.1.5.416.js HTTP/1.1" 200 2987
+17.13.15.24 - - [01/Mar/2015:06:48:33 -0300] "GET /favicon.ico HTTP/1.1" 200 5053
+17.13.15.24 - - [01/Mar/2015:06:48:33 -0300] "GET /infinanceclient/sc/modules/ISC_Core.js HTTP/1.1" 200 206115
+17.13.15.24 - - [01/Mar/2015:06:48:44 -0300] "GET /favicon.ico HTTP/1.1" 200 5053
+17.13.15.24 - - [01/Mar/2015:06:50:04 -0300] "GET /infinance/movimentacoes/list/?contaMovimento=1340&data_inicial=02%2F2015 HTTP/1.1" 200 5110

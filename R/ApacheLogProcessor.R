@@ -1,12 +1,14 @@
 
-#' read.apache.log.combined
+#' read.apache.log
 #'
-#' Reads the Apache Log Combined Format and return a data frame with the log data.
+#' Reads the Apache Log Common or Combined Format and return a data frame with the log data.
 #'
-#' The functions recives a full path to the log file and process the default log combined format of Apache. 
+#' The functions recives a full path to the log file and process the default log in common or combined format of Apache. 
 #' LogFormat "\%h \%l \%u \%t \\"\%r\\" \%>s \%b \\"\%\{Referer\}i\\" \\"\%\{User-Agent\}i\\"" combined
+#' LogFormat "\%h \%l \%u \%t \\"\%r\\" \%>s \%b\\" common
 #'
 #' @param file string. Full path to the log file.
+#' @param format string. Values "common" or "combined" to set the input log format. The default value is the combined.
 #' @param url_includes regex. If passed only the urls that matches with the regular expression passed will be returned.
 #' @param url_excludes regex. If passed only the urls that don't matches with the regular expression passed will be returned.
 #' @param url_query_string boolean. If the query string will be included in url column.
@@ -19,31 +21,37 @@
 #' @author Diogo Silveira Mendonca
 #' @seealso \url{http://httpd.apache.org/docs/1.3/logs.html}
 #' @examples
-#' path = system.file("examples", "apache_example.txt", package = "ApacheLogProcessor")
+#' path_combined = system.file("examples", "access_log_combined.txt", package = "ApacheLogProcessor")
+#' path_common = system.file("examples", "access_log_common.txt", package = "ApacheLogProcessor")
 #' 
-#' #Read the full log with all lines and columns and return a data frame
-#' df1 = read.apache.log.combined(path)
+#' #Read a log file with combined format and return it in a data frame
+#' df1 = read.apache.log(path_combined)
+#'
+#' #Read a log file with common format and return it in a data frame
+#' df2 = read.apache.log(path_common, format="common") 
 #' 
 #' #Read only the lines that url matches with the pattern passed
-#' df2 = read.apache.log.combined(path, url_includes="infinance")
+#' df3 = read.apache.log(path_combined, url_includes="infinance")
 #' 
 #' #Read only the lines that url matches with the pattern passed, but do not matche the exclude pattern
-#' df3 = read.apache.log.combined(path, url_includes="infinance", url_excludes="infinanceclient")
+#' df4 = read.apache.log(path_combined, url_includes="infinance", url_excludes="infinanceclient")
 #' 
 #' #Removes the method and query string from urls
-#' df4 = read.apache.log.combined(path, url_http_method=FALSE, url_query_string=FALSE)
+#' df5 = read.apache.log(path_combined, url_http_method=FALSE, url_query_string=FALSE)
 #' 
 #' #Return only the ip, url and datetime columns
-#' df5 = read.apache.log.combined(path, columns=c("ip", "url", "datetime"))
+#' df6 = read.apache.log(path_combined, columns=c("ip", "url", "datetime"))
 #' 
 #' #Process using 2 cores in parallel for speed up. 
-#' df6 = read.apache.log.combined(path, num_cores=2)
+#' df7 = read.apache.log(path_combined, num_cores=2)
+#' 
 #' 
 #' @import foreach
 #' @import parallel
 #' @import doParallel
+#' @importFrom utils read.csv
 #' @export
-read.apache.log.combined <- function(file, url_includes = "", url_excludes = "", 
+read.apache.log <- function(file, format = "combined", url_includes = "", url_excludes = "", 
                                      url_query_string = TRUE, url_http_version = TRUE, url_http_method = TRUE,
                                      columns = c("ip", "datetime", "url", "httpcode", "size" , 
                                                  "referer", "useragent"), num_cores = 1,
@@ -73,7 +81,14 @@ read.apache.log.combined <- function(file, url_includes = "", url_excludes = "",
   logDf$V3 <- NULL; 
   
   #set the column names
-  colnames(logDf) <- c("ip", "datetime", "timezone", "url", "httpcode", "size" , "referer", "useragent")
+  if(format == "common"){
+    cl <- c("ip", "datetime", "timezone", "url", "httpcode", "size")
+    colnames(logDf) <- cl
+    columns <- columns[columns %in% cl]
+  }else{
+    colnames(logDf) <- c("ip", "datetime", "timezone", "url", "httpcode", "size" , "referer", "useragent")  
+  }
+  
   
   #include only the columns required
   c_include = c()
@@ -184,5 +199,14 @@ read.apache.log.combined <- function(file, url_includes = "", url_excludes = "",
 #'
 #' @format LogFormat "\%h \%l \%u \%t \\"\%r\\" \%>s \%b \\"\%\{Referer\}i\\" \\"\%\{User-Agent\}i\\"" combined
 #' @source \url{http://www.infinance.com.br/}
-#' @name apache_example
+#' @name access_log_combined
+NULL
+
+#' Apache log common file example.
+#'
+#' A set of 12 log lines in Apache Log Common Format
+#'
+#' @format LogFormat "\%h \%l \%u \%t \\"\%r\\" \%>s \%b\\" common
+#' @source \url{http://www.infinance.com.br/}
+#' @name access_log_common
 NULL

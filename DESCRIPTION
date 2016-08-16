@@ -1,11 +1,18 @@
 Package: ApacheLogProcessor
 Type: Package
-Title: Process the Apache Web Server Log Combined Files
-Version: 0.1.4
-Date: 2015-06-09
+Title: Process the Apache Web Server Access Log Files
+Version: 0.1.6
+Date: 2016-08-16
 Author: Diogo Silveira Mendonca
 Maintainer: Diogo Silveira Mendonca <diogosmendonca@gmail.com>
-Description: Provides a function to process Apache Log Combined files. The main functionality is to extract data from log files to data frames.
-License: LGPL-3
+Description: Provides a function to process Apache Log Common or Combined files. The main
+    functionality is to extract data from log files to data frames.
+License: LGPL-3 | file LICENSE
 URL: https://github.com/diogosmendonca/ApacheLogProcessor
-Imports: foreach, parallel, doParallel
+BugReports: https://github.com/diogosmendonca/ApacheLogProcessor/issues
+Imports:
+    foreach,
+    parallel,
+    doParallel,
+    utils
+RoxygenNote: 5.0.1

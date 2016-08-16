@@ -1,2 +1,2 @@
 # ApacheLogProcessor
-R Package to Process the Apache Web Server Log Combined Files
+R Package to Process the Apache Web Server Access Log Files
