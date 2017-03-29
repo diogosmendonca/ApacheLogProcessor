@@ -205,7 +205,7 @@ read.multiple.apache.access.log <- function(path, prefix, verbose = TRUE, ...){
     #check if the file is gziped
     gziped = FALSE
     gzipedFile <- NULL
-    if(endsWith(inputFile, ".gz")){
+    if(grepl("\\.gz$", inputFile)){
       gziped = TRUE
       
       #store the name of gziped file
@@ -634,7 +634,7 @@ read.multiple.apache.error.log <- function(path, prefix, verbose = TRUE, ...){
     #check if the file is gziped
     gziped = FALSE
     gzipedFile <- NULL
-    if(endsWith(inputFile, ".gz")){
+    if(grepl("\\.gz$", inputFile)){
       gziped = TRUE
       
       #store the name of gziped file
