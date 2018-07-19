@@ -1,8 +1,8 @@
 Package: ApacheLogProcessor
 Type: Package
 Title: Process the Apache Web Server Log Files
-Version: 0.2.2
-Date: 2017-03-29
+Version: 0.2.3
+Date: 2018-07-18
 Author: Diogo Silveira Mendonca
 Maintainer: Diogo Silveira Mendonca <diogosmendonca@gmail.com>
 Description: Provides capabilities to process Apache HTTPD Log files.The main functionalities are to extract data from access and error log files to data frames.
@@ -15,4 +15,4 @@ Imports:
     doParallel,
     utils,
     stringr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

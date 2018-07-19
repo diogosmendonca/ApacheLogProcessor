@@ -32,4 +32,3 @@ dfLog <- read.multiple.apache.access.log(path, "m_access_log_combined_")
 \author{
 Diogo Silveira Mendonca
 }
-

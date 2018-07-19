@@ -217,13 +217,18 @@ read.multiple.apache.access.log <- function(path, prefix, verbose = TRUE, ...){
       #unzip the file
       if(verbose) print(paste("Unziping ", gzipedFile))
       write(readLines(zz <- gzfile(paste(path, gzipedFile, sep=""))), 
-            file = paste(path, inputFile, sep=""))
+            file = paste(tempdir(), inputFile, sep="\\"))
       close(zz)
       unlink(zz)
     }
     
     #build the full file path
-    f <- paste(path, inputFile, sep = "")
+    if(gziped == TRUE){
+      f <- paste(tempdir(), inputFile, sep = "\\")
+    }else{
+      f <- paste(path, inputFile, sep = "")
+    }
+    
     #read the log
     if(verbose) print(paste("Reading file ", inputFile))
     dfTemp <- read.apache.access.log(file = f, ...)
@@ -238,7 +243,7 @@ read.multiple.apache.access.log <- function(path, prefix, verbose = TRUE, ...){
 
     #delete the uziped file
     if(gziped){
-      file.remove(paste(path, inputFile, sep=""))
+      file.remove(paste(tempdir(), inputFile, sep="\\"))
       if(verbose) print(paste("Removed ", inputFile))
     }
   }
@@ -646,7 +651,7 @@ read.multiple.apache.error.log <- function(path, prefix, verbose = TRUE, ...){
       #unzip the file
       if(verbose) print(paste("Unziping ", gzipedFile))
       write(readLines(zz <- gzfile(paste(path, gzipedFile, sep=""))), 
-            file = paste(path, inputFile, sep=""))
+            file = paste(tempdir(), inputFile, sep="\\"))
       close(zz)
       unlink(zz)
       
@@ -654,7 +659,12 @@ read.multiple.apache.error.log <- function(path, prefix, verbose = TRUE, ...){
     }
     
     #build the full file path
-    f <- paste(path, inputFile, sep = "")
+    if(gziped == TRUE){
+      f <- paste(tempdir(), inputFile, sep = "\\")
+    }else{
+      f <- paste(path, inputFile, sep = "")
+    }
+    
     #read the log
     if(verbose) print(paste("Reading file ", inputFile))
     dfTemp <- read.apache.error.log(file = f, ...)
@@ -669,7 +679,7 @@ read.multiple.apache.error.log <- function(path, prefix, verbose = TRUE, ...){
     
     #delete the uziped file
     if(gziped){
-      file.remove(paste(path, inputFile, sep=""))
+      file.remove(paste(tempdir(), inputFile, sep="\\"))
       if(verbose) print(paste("Removed ", inputFile))
     }
   }

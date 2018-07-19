@@ -10,4 +10,3 @@
 \description{
 A set of 12 log lines in Apache Log Common Format
 }
-

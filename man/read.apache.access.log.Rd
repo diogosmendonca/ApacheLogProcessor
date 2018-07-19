@@ -59,10 +59,9 @@ df6 = read.apache.access.log(path_combined, num_cores=2)
 
 
 }
-\author{
-Diogo Silveira Mendonca
-}
 \seealso{
 \url{http://httpd.apache.org/docs/1.3/logs.html}
 }
-
+\author{
+Diogo Silveira Mendonca
+}

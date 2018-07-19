@@ -30,4 +30,3 @@ path <- paste(path, "/", sep="")
 dfELog <- read.multiple.apache.error.log(path, "m_error_log_")
 
 }
-

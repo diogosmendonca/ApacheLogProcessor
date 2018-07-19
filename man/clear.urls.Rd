@@ -52,4 +52,3 @@ urls2 <- clear.urls(df2$url)
 \author{
 Diogo Silveira Mendonca
 }
-

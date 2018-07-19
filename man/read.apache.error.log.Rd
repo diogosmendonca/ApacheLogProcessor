@@ -30,4 +30,3 @@ dfELog <- read.apache.error.log(path)
 \author{
 Diogo Silveira Mendonca
 }
-

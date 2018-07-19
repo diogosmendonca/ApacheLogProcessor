@@ -29,4 +29,3 @@ params <- get.url.params(df)
 \author{
 Diogo Silveira Mendonca
 }
-
